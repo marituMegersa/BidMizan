@@ -1,16 +1,15 @@
-from fastapi import APIRouter, Depends, status
-from sqlalchemy.orm import Session
-from app.db.session import get_db
-from app.domain.procurement_bidding.schemas import ProcurementBiddingRequest, ProcurementBiddingResponse
+from fastapi import APIRouter, status
+from pydantic import BaseModel
+from app.domain.procurement_bidding.service import ProcurementBiddingService
 
-router = APIRouter(prefix="/api/v1/procurement_bidding", tags=["BidMizan Ethical Procurement & Tender AI Domain"])
+router = APIRouter(prefix="/api/v1/procurement_bidding", tags=["Procurement Bidding"])
 
-@router.post("/process", response_model=ProcurementBiddingResponse, status_code=status.HTTP_201_CREATED)
-def process_domain_request(data: ProcurementBiddingRequest, db: Session = Depends(get_db)):
-    return ProcurementBiddingResponse(
-        id="REC-8821",
-        status="COMPLETED",
-        summary=f"Processed {data} for BidMizan Ethical Procurement & Tender AI",
-        confidence_score=0.99,
-        created_at="2026-09-10T16:00:00Z"
-    )
+class BidInput(BaseModel):
+    tender_id: str
+    vendor_name: str
+    bid_amount: float
+    technical_proposal_summary: str
+
+@router.post("/audit_bid", status_code=status.HTTP_200_OK)
+def audit_bid(data: BidInput):
+    return ProcurementBiddingService.audit_bid(data.tender_id, data.vendor_name, data.bid_amount, data.technical_proposal_summary)
