@@ -1,30 +1,46 @@
-# BidMizan Ethical Procurement & Tender AI 🚀
+# BidMizan — Ethical Procurement & Tender AI ⚖️🏛️
 
-Ethical Procurement Fraud Detection, Bid Auditor & Fairness Score Engine
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![Ethics](https://img.shields.io/badge/Ethics-Tamper--Proof%20Audit-emerald?style=for-the-badge)]()
 
-## 📁 Monorepo Structure
+**Ethical Procurement Fraud Detection, Bid Anomaly Auditor & Fairness Evaluation Engine**
+
+---
+
+## 🌟 Key Features
+
+- **Automated Fraud & Anomaly Detector**: Scans tender bids for price collusion, abnormal price swings, and vendor conflicts.
+- **Compliance Audit Score Engine**: Evaluates vendor technical proposals against statutory procurement regulations.
+- **SHA-256 Tamper-Proof Audit Trail**: Cryptographically hashes bid submission logs for immutable auditability.
+- **Fair Procurement Dashboard**: Visualizes vendor compliance metrics, pricing distribution, and audit results.
+
+---
+
+## 📂 Monorepo Structure
 
 ```text
 BidMizan/
 ├── apps/
 │   ├── api/                     # Python 3.12 FastAPI Backend
-│   └── web/                     # React 18 TypeScript Frontend
-├── docker-compose.yml           # Full Stack Container Setup
+│   │   ├── app/domain/procurement_bidding/
+│   │   │   ├── models.py        # Tender & Vendor Bid ORM Models
+│   │   │   ├── schemas.py       # Pydantic v2 Procurement Schemas
+│   │   │   ├── service.py       # Fraud Detection & Audit Engine
+│   │   │   └── router.py        # REST Endpoints
+│   │   └── main.py
+│   └── web/                     # React 18 Procurement Dashboard
+├── docker-compose.yml
 └── README.md
 ```
 
+---
+
 ## 🚀 Quick Start
-
-### 1. Run Python FastAPI Backend (`apps/api`)
 ```bash
-cd apps/api
-pip install -r requirements.txt
-python main.py
-```
+# Backend
+cd apps/api && pip install -r requirements.txt && python main.py
 
-### 2. Run React Frontend (`apps/web`)
-```bash
-cd apps/web
-npm install
-npm run dev
+# Frontend
+cd apps/web && npm install && npm run dev
 ```
