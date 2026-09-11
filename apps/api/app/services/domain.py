@@ -2,6 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
 import uuid
 import hashlib
+import datetime
 
 from app.models.domain import ProcurementBiddingRecord
 from app.repositories.domain import ProcurementBiddingRepository
@@ -28,7 +29,8 @@ class ProcurementBiddingService:
             tender_id=req.tender_id,
             fairness_score=fairness,
             audit_status=status_str,
-            sha256_hash=sha_hash
+            sha256_hash=sha_hash,
+            created_at=datetime.datetime.utcnow()
         )
         saved = await self.repo.create(db_obj)
 
@@ -38,7 +40,7 @@ class ProcurementBiddingService:
             audit_status=saved.audit_status,
             sha256_hash=saved.sha256_hash,
             recommendations=["Mandatory collusion investigation triggered." if is_suspicious else "Procurement fairness satisfied."],
-            audited_at=saved.created_at
+            audited_at=saved.created_at or datetime.datetime.utcnow()
         )
 
     async def list_audit_logs(self, skip: int = 0, limit: int = 50) -> List[ProcurementBiddingRecord]:
