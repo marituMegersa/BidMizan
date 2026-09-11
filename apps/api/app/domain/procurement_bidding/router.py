@@ -1,15 +1,14 @@
-from fastapi import APIRouter, Depends, status, Query
-from sqlalchemy.orm import Session
-from app.db.session import get_db
-from app.domain.procurement_bidding.schemas import TenderAuditRequest, TenderAuditResponse
-from app.domain.procurement_bidding.service import ProcurementBiddingService
+from fastapi import APIRouter, Depends, status
+from sqlalchemy.ext.asyncio import AsyncSession
+from app.db.session import get_async_db
+from app.domain.procurement_bidding.service import ProcurementAuditLangGraphService
 
-router = APIRouter(prefix="/api/v1/procurement_bidding", tags=["Procurement Fraud Detection"])
+router = APIRouter(prefix="/api/v1/procurement_bidding", tags=["BidMizan — Ethical Procurement & Tender AI"])
 
-@router.post("/audit", response_model=TenderAuditResponse, status_code=status.HTTP_201_CREATED)
-def audit_tender(req: TenderAuditRequest, db: Session = Depends(get_db)):
-    return ProcurementBiddingService.audit_and_store(db, req)
+@router.get("/healthz")
+async def async_health_check():
+    return {"status": "healthy", "architecture": "Async SQLAlchemy + LangGraph + Redis + Elasticsearch"}
 
-@router.get("/audit-log")
-def list_audit_logs(skip: int = Query(0, ge=0), limit: int = Query(50, le=100), db: Session = Depends(get_db)):
-    return ProcurementBiddingService.list_audits(db, skip=skip, limit=limit)
+@router.post("/agentic-eval")
+async def run_agentic_eval(payload: dict, db: AsyncSession = Depends(get_async_db)):
+    return await ProcurementAuditLangGraphService.evaluate_async(db, payload)
