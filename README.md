@@ -1,46 +1,111 @@
-# BidMizan — Ethical Procurement & Tender AI ⚖️🏛️
+# BidMizan Ethical Procurement AI
 
-[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
-[![Ethics](https://img.shields.io/badge/Ethics-Tamper--Proof%20Audit-emerald?style=for-the-badge)]()
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.110.0-009688.svg?style=flat&logo=fastapi)](https://fastapi.tiangolo.com)
+[![React](https://img.shields.io/badge/React-18-61DAFB.svg?style=flat&logo=react)](https://react.dev)
+[![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg?style=flat&logo=python)](https://python.org)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-**Ethical Procurement Fraud Detection, Bid Anomaly Auditor & Fairness Evaluation Engine**
+> **Procurement Collusion Detection & Cryptographic Tender Audit Platform**
 
----
-
-## 🌟 Key Features
-
-- **Automated Fraud & Anomaly Detector**: Scans tender bids for price collusion, abnormal price swings, and vendor conflicts.
-- **Compliance Audit Score Engine**: Evaluates vendor technical proposals against statutory procurement regulations.
-- **SHA-256 Tamper-Proof Audit Trail**: Cryptographically hashes bid submission logs for immutable auditability.
-- **Fair Procurement Dashboard**: Visualizes vendor compliance metrics, pricing distribution, and audit results.
+An AI platform for transparent public procurement. Analyzes bid pricing distributions for price-fixing collusion, computes variance-coefficient fairness scores, and records cryptographic SHA-256 audit hashes for tamper-proof compliance.
 
 ---
 
-## 📂 Monorepo Structure
+## 🏛️ Clean Architecture Overview
 
-```text
-BidMizan/
-├── apps/
-│   ├── api/                     # Python 3.12 FastAPI Backend
-│   │   ├── app/domain/procurement_bidding/
-│   │   │   ├── models.py        # Tender & Vendor Bid ORM Models
-│   │   │   ├── schemas.py       # Pydantic v2 Procurement Schemas
-│   │   │   ├── service.py       # Fraud Detection & Audit Engine
-│   │   │   └── router.py        # REST Endpoints
-│   │   └── main.py
-│   └── web/                     # React 18 Procurement Dashboard
-├── docker-compose.yml
-└── README.md
+This repository is built following **Clean Layered Architecture** standards:
+
+```
+apps/api/app/
+├── api/          # Thin REST routers & Dependency Injection (deps.py)
+├── schemas/      # Pydantic v2 validation DTOs (Request / Response)
+├── models/       # SQLAlchemy 2.0 Async ORM models & Base declarative metadata
+├── repositories/ # Dedicated async database access queries ONLY
+├── services/     # Pure business logic, domain rules, & AI orchestrators
+├── core/         # Settings (pydantic-settings), Async Database, JWT Security, & Exceptions
+└── utils/        # Reusable helper utilities
 ```
 
 ---
 
-## 🚀 Quick Start
+## ✨ Key Features
+
+- **Collusion Detection**:  Coefficient of Variation (CV) analysis to flag bidder rings
+- **Cryptographic Audit**:  SHA-256 hash generation for verifiable bid history
+- **Audit Ledger**:  Async database storage of audited tenders and fairness scores
+- **Procurement Dashboard**:  React 18 UI displaying risk meters and tender audit trails
+
+---
+
+## 🛠️ Tech Stack
+
+- **Backend**: Python 3.12, FastAPI 0.110+, Async SQLAlchemy 2.0+, Pydantic v2
+- **Frontend**: React 18, TypeScript, Tailwind CSS, Lucide Icons
+- **Database & Cache**: PostgreSQL (Asyncpg), Redis, Elasticsearch
+- **AI & RAG**: vLLM / Ollama, LangChain, LangGraph State Graphs
+- **DevOps & Testing**: Docker, Docker Compose, Pytest, Pytest-Asyncio
+
+---
+
+## 🚀 Quick Start Guide
+
+### 1. Prerequisites
+- Docker & Docker Compose
+- Python 3.12+
+- Node.js 20+
+
+### 2. Backend Setup
 ```bash
-# Backend
-cd apps/api && pip install -r requirements.txt && python main.py
+# Navigate to API directory
+cd apps/api
 
-# Frontend
-cd apps/web && npm install && npm run dev
+# Install dependencies
+pip install -r requirements.txt
+
+# Run database migrations & start FastAPI app
+python main.py
+# API running at http://localhost:8000 (Swagger docs at http://localhost:8000/docs)
 ```
+
+### 3. Frontend Setup
+```bash
+# Navigate to Web app directory
+cd apps/web
+
+# Install dependencies & start dev server
+npm install
+npm run dev
+# Web app running at http://localhost:3000
+```
+
+### 4. Running via Docker Compose
+```bash
+docker-compose up --build
+```
+
+---
+
+## 🧪 Testing
+
+Run unit & integration tests using `pytest`:
+```bash
+cd apps/api
+pytest tests/ -v
+```
+
+---
+
+## 📜 API Documentation
+
+Once started, interactive API documentation is available at:
+- **Swagger UI**: `http://localhost:8000/docs`
+- **ReDoc**: `http://localhost:8000/redoc`
+
+**Primary Endpoint Sample**:
+`POST /api/v1/procurement/audit`
+
+---
+
+## 👤 Author & Maintainer
+
+Maintained with ❤️ by **[marituMegersa](https://github.com/marituMegersa)**.
