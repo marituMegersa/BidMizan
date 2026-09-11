@@ -20,3 +20,5 @@ class ProcurementBiddingRepository:
         await self.db.commit()
         await self.db.refresh(record)
         return record
+
+# Database persistence query encapsulation
