@@ -1,21 +1,15 @@
 from pydantic import BaseModel, Field
-from typing import List, Dict, Any, Optional
+from typing import List
 from datetime import datetime
 
-class ProcurementBiddingRequest(BaseModel):
+class TenderAuditRequest(BaseModel):
+    tender_id: str = Field(..., example="TENDER-ETH-2026-88")
+    bid_prices: List[float] = Field(..., example=[500000.0, 502000.0, 501500.0])
 
+class TenderAuditResponse(BaseModel):
     tender_id: str
-    vendor_name: str
-    bid_amount: float
-    technical_proposal_summary: str
-
-
-class ProcurementBiddingResponse(BaseModel):
-    id: str
-    status: str = "COMPLETED"
-    summary: str
-    confidence_score: float = 0.98
-    created_at: datetime
-
-    class Config:
-        from_attributes = True
+    fairness_score: float
+    audit_status: str
+    sha256_hash: str
+    recommendations: List[str]
+    audited_at: datetime = Field(default_factory=datetime.utcnow)
