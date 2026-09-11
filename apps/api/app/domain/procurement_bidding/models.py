@@ -10,4 +10,4 @@ class ProcurementBiddingRecord(Base):
     fairness_score = Column(Float, default=100.0)
     audit_status = Column(String, default="PASSED")
     sha256_hash = Column(String, nullable=False)
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow, index=True)
