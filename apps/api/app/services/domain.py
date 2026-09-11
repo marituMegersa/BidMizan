@@ -45,3 +45,5 @@ class ProcurementBiddingService:
 
     async def list_audit_logs(self, skip: int = 0, limit: int = 50) -> List[ProcurementBiddingRecord]:
         return await self.repo.get_multi(skip=skip, limit=limit)
+
+# Business logic & AI engine orchestrator
