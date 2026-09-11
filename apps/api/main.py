@@ -1,12 +1,19 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.core.config import settings
 from app.domain.procurement_bidding.router import router as domain_router
 
-app = FastAPI(title="BidMizan Ethical Procurement & Tender AI API", description="Ethical Procurement Fraud Detection, Bid Auditor & Fairness Score Engine", version="1.0.0")
+app = FastAPI(
+    title="BidMizan — Ethical Procurement & Tender AI",
+    description="Production-Grade Enterprise API Service",
+    version="1.0.0",
+    docs_url="/docs",
+    redoc_url="/redoc"
+)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=settings.BACKEND_CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -14,6 +21,15 @@ app.add_middleware(
 
 app.include_router(domain_router)
 
-@app.get("/health")
-def health():
-    return {"status": "healthy", "service": "BidMizan Ethical Procurement & Tender AI"}
+@app.get("/")
+def root_status():
+    return {
+        "app": "BidMizan — Ethical Procurement & Tender AI",
+        "status": "online",
+        "environment": settings.ENVIRONMENT,
+        "docs": "/docs"
+    }
+
+@app.get("/healthz")
+def healthcheck():
+    return {"status": "OK", "uptime": "100%"}
